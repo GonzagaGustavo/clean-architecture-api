@@ -1,23 +1,23 @@
-import MissingParamError from "../usecases/errors/missing-param";
 import UnauthorizedError from "../usecases/errors/unauthorized";
 
 export default class HttpResponse {
   /**
    * @returns statusCode 400
    */
-  static badRequest(paramName: string) {
+  static badRequest(error: Error) {
     return {
       statusCode: 400,
-      body: new MissingParamError(paramName),
+      body: error,
     };
   }
 
   /**
    * @returns statusCode 500
    */
-  static serverError() {
+  static serverError(error: any) {
     return {
       statusCode: 500,
+      body: error,
     };
   }
 
@@ -28,6 +28,16 @@ export default class HttpResponse {
     return {
       statusCode: 401,
       body: new UnauthorizedError(),
+    };
+  }
+
+  /**
+   * @returns statusCode 200
+   */
+  static ok(body: any) {
+    return {
+      statusCode: 200,
+      body: body,
     };
   }
 }
